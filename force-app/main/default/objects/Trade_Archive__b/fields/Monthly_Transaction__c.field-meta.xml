@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Monthly_Transaction__c</fullName>
+    <label>Monthly Transaction</label>
+    <referenceTo>Monthly_Transaction__c</referenceTo>
+    <relationshipLabel>Trade Archives</relationshipLabel>
+    <relationshipName>Trade_Archive</relationshipName>
+    <required>false</required>
+    <type>Lookup</type>
+</CustomField>

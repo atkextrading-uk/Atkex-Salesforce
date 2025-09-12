@@ -1,0 +1,18 @@
+<template>
+    {recordId}
+    <lightning-card>
+        <div if:true={openUrl}>
+            <h3 title="Open">Open Screenshot</h3>
+            <img src={openUrl} alt="Open Image" class="slds-p-around_xx-small"/>
+
+        </div>
+        <div if:true={closeUrl}>
+            <h3>Close Screenshot</h3>
+            <img src={closeUrl} alt="Close Image" class="slds-p-around_xx-small"/>
+        </div>
+        <div if:true={secondScreenshot}>
+            <h3>Second Screenshot</h3>
+            <img src={secondScreenshot} alt="Second Image" class="slds-p-around_xx-small"/>
+        </div>
+    </lightning-card>
+</template>

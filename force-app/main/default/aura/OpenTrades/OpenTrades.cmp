@@ -1,0 +1,25 @@
+<aura:component implements="flexipage:availableForAllPageTypes" access="global" controller="OpenTradesController">
+    <aura:attribute name="Trades" type="Trade__c" />
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <lightning:card title = "Open Trades" >
+    	<aura:set attribute="body">
+           <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+            <thead>
+              <tr class="slds-text-title_caps">
+                <th scope="col">Name</th>
+                <th scope="col">Symbol</th>
+                
+              </tr>
+            </thead>
+            <tbody>
+              <aura:iteration items="{!v.Trades}" var="trade">
+                <tr scope="row">
+                  <td> {!trade.Name}</td>
+                  <td> {!trade.Symbol__c}</td>
+                </tr>
+              </aura:iteration>
+            </tbody>
+          </table>
+      </aura:set>
+    </lightning:card>
+</aura:component>

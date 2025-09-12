@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SR_Hedge__c</fullName>
+    <label>SR Hedge</label>
+    <referenceTo>SR_Hedge__c</referenceTo>
+    <relationshipLabel>Partial Closes</relationshipLabel>
+    <relationshipName>Partial_Closes</relationshipName>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

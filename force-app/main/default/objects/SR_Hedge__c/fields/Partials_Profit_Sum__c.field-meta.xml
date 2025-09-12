@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Partials_Profit_Sum__c</fullName>
+    <label>Partials Profit (Sum)</label>
+    <summarizedField>Partial_Close__c.Close_Profit__c</summarizedField>
+    <summaryForeignKey>Partial_Close__c.SR_Hedge__c</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

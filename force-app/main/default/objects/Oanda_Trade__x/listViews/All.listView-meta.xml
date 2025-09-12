@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All</fullName>
+    <columns>Index__c</columns>
+    <columns>ExternalId</columns>
+    <columns>DisplayUrl</columns>
+    <columns>Profit_Loss__c</columns>
+    <columns>Balance_On_Close__c</columns>
+    <columns>Close_Comments__c</columns>
+    <columns>Close_Date_Time__c</columns>
+    <columns>Currency__c</columns>
+    <columns>Monthly_Transaction__c</columns>
+    <columns>Name__c</columns>
+    <columns>Open_Comments__c</columns>
+    <columns>Open_Date_Time__c</columns>
+    <columns>Outcome__c</columns>
+    <columns>Profit_Percentage__c</columns>
+    <columns>Side__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>All</label>
+</ListView>

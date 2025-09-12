@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Latest_Partial_Date_Time__c</fullName>
+    <label>Latest Partial Date/Time</label>
+    <summarizedField>Partial_Close__c.Close_Date_Time__c</summarizedField>
+    <summaryForeignKey>Partial_Close__c.SR_Hedge__c</summaryForeignKey>
+    <summaryOperation>max</summaryOperation>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

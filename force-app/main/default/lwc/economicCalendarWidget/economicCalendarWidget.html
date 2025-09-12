@@ -1,0 +1,38 @@
+<template>
+    <div>
+        <lightning-card title="Calendar">
+            <p>Picklsit to select calendar</p>
+            <lightning-combobox
+                name="calendar"
+                value={comboBoxCalendarValue}
+                placeholder="Select Calendar"
+                options={comboBoxCalendarOptions}
+                onchange={comboBoxCalendarHandleChange}
+            ></lightning-combobox>
+            <h1>{comboBoxCalendarValue}</h1>
+            <!--lightning-button
+                variant="brand"
+                label="Response"
+                title="Begins the task"
+                onclick={getResponse}>
+            </lightning-button>
+            <lightning-button
+                variant="brand"
+                label="Response"
+                title="Begins the task"
+                onclick={getResponse2}>
+            </lightning-button>
+            <div class="slds-card__header slds-grid">
+                Economic Calendar
+            </div>  
+            <div class="slds-card__body slds-card__body_inner">
+                <p>Calendare displayed: {currentCalendar}</p>
+            </div>
+            <lightning-datatable
+                key-field="id"
+                data={tableData}
+                columns={columns}>
+            </lightning-datatable-->
+        </lightning-card>
+    </div>
+</template>

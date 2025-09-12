@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Monthly_Transaction__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalDeveloperName>monthlyTransaction</externalDeveloperName>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Monthly Transaction</label>
+    <referenceTo>Monthly_Transaction__c</referenceTo>
+    <relationshipLabel>Algorithmic Trades</relationshipLabel>
+    <relationshipName>Algorithmic_Trades</relationshipName>
+    <required>false</required>
+    <type>Lookup</type>
+</CustomField>

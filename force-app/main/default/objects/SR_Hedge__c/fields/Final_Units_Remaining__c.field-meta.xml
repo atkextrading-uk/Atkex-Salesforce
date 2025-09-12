@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Final_Units_Remaining__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF ( 
+  Number_of_Partial_Closes__c &gt; 0,
+  Units_Remaining__c,
+  IF ( NOT(ISBLANK(Close_Date_Time__c)),
+    0,
+    X1st_Trade_Units__c 
+  )
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Final Units Remaining</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

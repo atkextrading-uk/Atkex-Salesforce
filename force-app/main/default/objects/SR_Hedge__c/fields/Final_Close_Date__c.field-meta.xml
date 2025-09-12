@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Final_Close_Date__c</fullName>
+    <formula>if ( Number_of_Partial_Closes__c = 0,  Close_Date_Time__c ,  if ( Units_Remaining__c = 0, Latest_Partial_Date_Time__c, null) )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Final Close Date</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>DateTime</type>
+</CustomField>

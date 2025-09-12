@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Symbol__c</fullName>
+    <label>Symbol</label>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>BTCGBP</fullName>
+                <default>false</default>
+                <label>BTCGBP</label>
+            </value>
+            <value>
+                <fullName>ETHGBP</fullName>
+                <default>false</default>
+                <label>ETHGBP</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

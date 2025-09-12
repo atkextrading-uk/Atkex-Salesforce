@@ -1,0 +1,29 @@
+<template>
+    
+    <!-- create folder card -->
+    <lightning-card  variant="Narrow"  title="SR Open Trades" icon-name="standard:folder" class="cardSpinner">
+        <!-- loader -->
+        <div if:true={showSpinner}>
+            <lightning-spinner
+                alternative-text="Loading..." variant="brand">
+            </lightning-spinner>
+        </div>
+        <!-----/loader-------->
+        <div class="slds-var-p-around_small">
+            <template if:true={data}>
+                <c-l-w-c-lookup-custom-datatable-type
+                    key-field="Id"
+                    data={data} 
+                    columns={columns} 
+                    onlookupchanged={lookupChanged} 
+                    onvalueselect={handleSelection}
+                    draft-values={draftValues} 
+                    oncellchange={handleCellChange}
+                    onsave={handleSave}
+                    oncancel={handleCancel}
+                    hide-checkbox-column>
+                </c-l-w-c-lookup-custom-datatable-type>
+            </template>
+        </div>
+    </lightning-card>
+</template>

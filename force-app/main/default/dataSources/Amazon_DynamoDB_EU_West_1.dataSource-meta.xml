@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ExternalDataSource xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customConfiguration>{&quot;timeout&quot;:&quot;120&quot;}</customConfiguration>
+    <externalDataSrcDescriptors>
+        <fullName>SCHEMA_TABLE_METADATA01I7Q000002qy1s</fullName>
+        <customObject>Oanda_Trade__x</customObject>
+        <descriptor>{&quot;systemVersion&quot;:1,&quot;partiQlTableName&quot;:&quot;Oanda-Trades-Table-1&quot;,&quot;primaryIndex&quot;:{&quot;primary&quot;:true,&quot;name&quot;:&quot;PrimaryKey&quot;,&quot;partitionKey&quot;:&quot;OandaId&quot;,&quot;partitionKeyType&quot;:&quot;DbNumber&quot;,&quot;projectionType&quot;:&quot;ALL&quot;,&quot;projectedColumns&quot;:[]},&quot;secondaryIndices&quot;:{},&quot;indicesKeyTypes&quot;:{&quot;OandaId&quot;:&quot;DbNumber&quot;}}</descriptor>
+        <developerName>SCHEMA_TABLE_METADATA01I7Q000002qy1s</developerName>
+        <externalDataSource>Amazon_DynamoDB_EU_West_1</externalDataSource>
+        <subtype>SchemaTableMetadata</subtype>
+        <systemVersion>1</systemVersion>
+        <type>Schema</type>
+    </externalDataSrcDescriptors>
+    <externalDataSrcDescriptors>
+        <fullName>SCHEMA_TABLE_METADATA01I7Q000002qytC</fullName>
+        <customObject>Algorithmic_Trade__x</customObject>
+        <descriptor>{&quot;systemVersion&quot;:1,&quot;partiQlTableName&quot;:&quot;Algorithmic-Trades&quot;,&quot;primaryIndex&quot;:{&quot;primary&quot;:true,&quot;name&quot;:&quot;PrimaryKey&quot;,&quot;partitionKey&quot;:&quot;index&quot;,&quot;partitionKeyType&quot;:&quot;DbString&quot;,&quot;projectionType&quot;:&quot;ALL&quot;,&quot;projectedColumns&quot;:[]},&quot;secondaryIndices&quot;:{},&quot;indicesKeyTypes&quot;:{&quot;index&quot;:&quot;DbString&quot;}}</descriptor>
+        <developerName>SCHEMA_TABLE_METADATA01I7Q000002qytC</developerName>
+        <externalDataSource>Amazon_DynamoDB_EU_West_1</externalDataSource>
+        <subtype>SchemaTableMetadata</subtype>
+        <systemVersion>1</systemVersion>
+        <type>Schema</type>
+    </externalDataSrcDescriptors>
+    <isWritable>true</isWritable>
+    <label>Amazon DynamoDB EU-West-1</label>
+    <namedCredential>Amazon_DynamoDB_EU_West_1</namedCredential>
+    <principalType>Anonymous</principalType>
+    <protocol>NoAuthentication</protocol>
+    <type>AmazonDynamoDb</type>
+</ExternalDataSource>

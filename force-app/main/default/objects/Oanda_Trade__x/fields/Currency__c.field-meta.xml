@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Currency__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalDeveloperName>currency</externalDeveloperName>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Currency</label>
+    <referenceTo>Currency__c</referenceTo>
+    <relationshipLabel>Oanda Trades</relationshipLabel>
+    <relationshipName>Oanda_Trades</relationshipName>
+    <required>false</required>
+    <type>Lookup</type>
+</CustomField>
