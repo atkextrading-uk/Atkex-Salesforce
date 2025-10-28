@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+  <apiVersion>60.0</apiVersion>
+  <isExposed>true</isExposed>
+  <masterLabel>Trade Calendar</masterLabel>
+  <targets>
+    <target>lightning__AppPage</target>
+    <target>lightning__RecordPage</target>
+    <target>lightning__HomePage</target>
+    <target>lightningCommunity__Page</target>
+  </targets>
+  <targetConfigs>
+    <targetConfig targets="lightning__AppPage, lightning__HomePage, lightning__RecordPage">
+      <property name="month" type="String" label="Month (name or 1–12)" />
+      <property name="year" type="String" label="Year (e.g., 2025)" />
+    </targetConfig>
+  </targetConfigs>
+</LightningComponentBundle>

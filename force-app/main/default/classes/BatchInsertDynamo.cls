@@ -33,3 +33,24 @@ global class BatchInsertDynamo implements Database.Batchable<SObject>, Database.
         
     }
 }
+
+/**
+ * Archived_Trade__x at = new Archived_Trade__x();
+at.UUID__c = 'test';
+at.Trading_Account__c = 'a0GJ7000003nKAzMAM';
+at.ExternalId = 'test123';
+
+// If Trading_Account__c is an Indirect Lookup, set it to the parent's *external id* value
+// e.g., Account acct = [SELECT External_Ref__c FROM Account WHERE Id = :someId];
+// at.Trading_Account__c = acct.External_Ref__c;
+
+Database.SaveResult sr = Database.insertImmediate(at);
+if (!sr.isSuccess()) {
+    for (Database.Error e : sr.getErrors()) {
+        System.debug('Status: ' + e.getStatusCode() + ' | ' + e.getMessage());
+        if (e.getFields() != null) System.debug('Fields: ' + e.getFields());
+    }
+} else {
+    System.debug('Inserted. ExternalId returned: ' + sr.getId());
+}
+ */

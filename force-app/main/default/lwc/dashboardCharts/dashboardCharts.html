@@ -1,0 +1,106 @@
+<template>
+  <lightning-card title="Trading Dashboard">
+    <div class="slds-p-around_medium">
+      <!-- Date filters -->
+      <div class="slds-grid slds-gutters slds-m-bottom_medium">
+        <div class="slds-col slds-size_8-of-12">
+        </div>
+        <div class="slds-col slds-size_2-of-12">
+          <lightning-input type="date" label="Start Date" value={startDateStr} onchange={handleStartChange}></lightning-input>
+        </div>
+        <div class="slds-col slds-size_2-of-12">
+          <lightning-input type="date" label="End Date" value={endDateStr} onchange={handleEndChange}></lightning-input>
+        </div>
+      </div>
+      
+      <lightning-layout multiple-rows pull-to-boundary="small" horizontal-align="spread">
+
+        <!-- Slot 1: Win/Loss chart -->
+        <lightning-layout-item size="12" medium-device-size="6" large-device-size="6">
+          <article class="slds-card panel">
+            <div class="slds-card__header slds-p-around_small">
+              <header class="slds-media slds-media_center">
+                <div class="slds-media__body">
+                  <h2 class="slds-card__header-title">Win / Loss Breakdown</h2>
+                </div>
+              </header>
+            </div>
+            <div class="slds-card__body slds-p-around_small">
+              <canvas lwc:dom="manual" class="chart chart-winloss" aria-label="Win Loss Doughnut"></canvas>
+            </div>
+          </article>
+        </lightning-layout-item>
+
+        <!-- Slot 2: Accumulated Profit -->
+        <lightning-layout-item size="12" medium-device-size="6" large-device-size="6">
+          <article class="slds-card panel">
+            <div class="slds-card__header slds-p-around_small">
+              <header class="slds-media slds-media_center">
+                <div class="slds-media__body">
+                  <h2 class="slds-card__header-title">Accumulated Profit</h2>
+                </div>
+              </header>
+            </div>
+            <div class="slds-card__body slds-p-around_small">
+              <canvas lwc:dom="manual" class="chart chart-equity" aria-label="Accumulated Profit Line"></canvas>
+            </div>
+          </article>
+        </lightning-layout-item>
+
+        <!-- Slot 3: Per-trade Profit/Loss + Average -->
+        <lightning-layout-item size="12" medium-device-size="6" large-device-size="6">
+          <article class="slds-card panel">
+            <div class="slds-card__header slds-p-around_small">
+              <header class="slds-media slds-media_center">
+                <div class="slds-media__body">
+                  <h2 class="slds-card__header-title">Profit Split (per trade) + Average</h2>
+                </div>
+              </header>
+            </div>
+            <div class="slds-card__body slds-p-around_small">
+              <canvas lwc:dom="manual" class="chart chart-split" aria-label="Per trade P/L with average"></canvas>
+            </div>
+          </article>
+        </lightning-layout-item>
+
+        <!-- Slot 4: Trades per Currency Pair -->
+        <lightning-layout-item size="12" medium-device-size="6" large-device-size="6">
+          <article class="slds-card panel">
+            <div class="slds-card__header slds-p-around_small">
+              <header class="slds-media slds-media_center">
+                <div class="slds-media__body">
+                  <h2 class="slds-card__header-title">Trades per Currency Pair</h2>
+                </div>
+              </header>
+            </div>
+            <div class="slds-card__body slds-p-around_small">
+              <canvas lwc:dom="manual" class="chart chart-pair" aria-label="Trades per Pair Bar"></canvas>
+            </div>
+          </article>
+        </lightning-layout-item>
+
+        <!-- Slot 5: Drawdown -->
+        <lightning-layout-item size="12" medium-device-size="6" large-device-size="6">
+          <article class="slds-card panel">
+            <div class="slds-card__header slds-p-around_small">
+              <header class="slds-media slds-media_center">
+                <div class="slds-media__body">
+                  <h2 class="slds-card__header-title">Drawdown</h2>
+                </div>
+              </header>
+            </div>
+
+            <div class="slds-card__body slds-p-around_small">
+              <canvas
+                lwc:dom="manual"
+                class="chart chart-drawdown"
+                aria-label="Drawdown Over Time Line Chart">
+              </canvas>
+            </div>
+          </article>
+        </lightning-layout-item>
+
+      </lightning-layout>
+    </div>
+  </lightning-card>
+</template>

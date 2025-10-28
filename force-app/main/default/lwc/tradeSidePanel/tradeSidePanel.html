@@ -1,0 +1,29 @@
+<template>
+  <lightning-card title="Trades">
+    <div class="wrap">
+      <lightning-tabset variant="scoped">
+        <lightning-tab label="Recent trades">
+          <div class="table-wrap slds-scrollable_y" style={tableStyle}>
+            <lightning-datatable
+              key-field="id"
+              data={recentTrades}
+              columns={recentColumns}
+              hide-checkbox-column
+            ></lightning-datatable>
+          </div>
+        </lightning-tab>
+
+        <lightning-tab label="Open positions">
+          <div class="table-wrap slds-scrollable_y" style={tableStyle}>
+            <lightning-datatable
+              key-field="id"
+              data={openPositions}
+              columns={openColumns}
+              hide-checkbox-column
+            ></lightning-datatable>
+          </div>
+        </lightning-tab>
+      </lightning-tabset>
+    </div>
+  </lightning-card>
+</template>

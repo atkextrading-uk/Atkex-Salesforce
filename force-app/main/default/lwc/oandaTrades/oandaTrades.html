@@ -1,0 +1,127 @@
+<template>
+    <lightning-card title="Oanda Trades">
+        <div class="toolbar">
+            <div class="toolbar-left">
+                <lightning-combobox
+                    name="pageSize"
+                    label="Rows per page"
+                    value={pageSize}
+                    options={pageSizeOptions}
+                    onchange={handlePageSizeChange}>
+                </lightning-combobox>
+            </div>
+
+            <div class="toolbar-right">
+                <!-- Date filters -->
+                <div class="date-filters">
+                    <lightning-input
+                        type="date"
+                        name="startDate"
+                        label="Start date"
+                        value={startDate}
+                        onchange={handleDateChange}>
+                    </lightning-input>
+                    <lightning-input
+                        type="date"
+                        name="endDate"
+                        label="End date"
+                        value={endDate}
+                        onchange={handleDateChange}>
+                    </lightning-input>
+                    <lightning-button
+                        variant="brand"
+                        label="Apply"
+                        onclick={applyFilters}>
+                    </lightning-button>
+                    <lightning-button variant="neutral" label="Columns" onclick={openFieldPicker}></lightning-button>
+                </div>
+            </div>
+        </div>
+
+        <template lwc:if={showSpinner}>
+            <lightning-spinner alternative-text="Loading" variant="brand" size="medium"></lightning-spinner>
+        </template>
+        <template lwc:else>
+            <lightning-datatable
+                key-field="Id"
+                data={rows}
+                columns={columns}
+                hide-checkbox-column
+                onrowaction={handleRowAction}
+                sorted-by={sortField}
+                sorted-direction={sortDirection}
+                onsort={handleSort}>
+            </lightning-datatable>
+        </template>
+
+        <div class="paginator">
+            <lightning-button label="Prev" onclick={prevPage} disabled={isFirstPage}></lightning-button>
+            <span class="page-text">Page {pageNumber} of {totalPages} ({totalRecords} records)</span>
+            <lightning-button label="Next" onclick={nextPage} disabled={isLastPage}></lightning-button>
+        </div>
+    </lightning-card>
+
+    <!-- Field Picker Modal -->
+    <template if:true={showFieldPicker}>
+        <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 class="slds-text-heading_medium">Choose Columns</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <lightning-dual-listbox
+                        name="fields"
+                        label="Visible fields"
+                        source-label="Available"
+                        selected-label="Shown"
+                        options={fieldOptions}
+                        value={selectedFields}
+                        onchange={handleFieldsChange}>
+                    </lightning-dual-listbox>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="neutral" label="Cancel" onclick={closeFieldPicker}></lightning-button>
+                    <lightning-button variant="brand" label="Apply" onclick={applyFieldPicker}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <!-- Screenshot Modal -->
+    <template if:true={showShots}>
+        <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open wide">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 class="slds-text-heading_medium">Screenshots</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium shots-grid">
+                    <div class="shot-card">
+                        <h3>Open</h3>
+                        <template if:true={currentOpenUrl}>
+                            <img src={currentOpenUrl} alt="Open Screenshot"/>
+                            <a href={currentOpenUrl} target="_blank">Open in new tab</a>
+                        </template>
+                        <template if:false={currentOpenUrl}>
+                            <p>No Open Screenshot URL</p>
+                        </template>
+                    </div>
+                    <div class="shot-card">
+                        <h3>Close</h3>
+                        <template if:true={currentCloseUrl}>
+                            <img src={currentCloseUrl} alt="Close Screenshot"/>
+                            <a href={currentCloseUrl} target="_blank">Open in new tab</a>
+                        </template>
+                        <template if:false={currentCloseUrl}>
+                            <p>No Close Screenshot URL</p>
+                        </template>
+                    </div>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="brand" label="Close" onclick={closeShots}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

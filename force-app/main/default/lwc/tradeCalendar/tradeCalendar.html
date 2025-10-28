@@ -1,0 +1,84 @@
+<template>
+  <div class="tc">
+    <div class="tc__header">
+      <div class="tc__title">
+        {monthLabel} {computedYear}
+        <span class="tc__monthtotal">({monthTotalFormatted})</span>
+      </div>
+
+      <div class="tc__controls">
+        <lightning-button-icon
+          icon-name="utility:chevronleft"
+          onclick={prevMonth}
+          alternative-text="Previous month"
+          class="ctrl-btn"
+        ></lightning-button-icon>
+
+        <lightning-combobox
+          class="ctrl-select"
+          value={curMonthValue}
+          options={monthOptions}
+          onchange={onMonthSelect}
+          variant="label-hidden"
+        ></lightning-combobox>
+
+        <lightning-input
+          class="year-input"
+          type="number"
+          value={curYear}
+          onchange={onYearInput}
+          variant="label-hidden"
+          min="1970"
+          max="2099"
+        ></lightning-input>
+
+        <lightning-button-icon
+          icon-name="utility:chevronright"
+          onclick={nextMonth}
+          alternative-text="Next month"
+          class="ctrl-btn"
+        ></lightning-button-icon>
+
+        <lightning-button
+          class="ctrl-today"
+          label="Today"
+          onclick={goToday}
+          variant="base"
+        ></lightning-button>
+      </div>
+    </div>
+
+    <!-- Weekday header now has 8 columns (adds 'Week') -->
+    <div class="tc__weekdays tc__weekdays--8">
+      <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span>
+      <span>Thu</span><span>Fri</span><span>Sat</span>
+      <span class="tc__weekhdr">Week</span>
+    </div>
+
+    <!-- Grid by weeks; each row has 7 day cells + 1 weekly total cell -->
+    <div class="tc__grid tc__grid--8">
+      <template for:each={weeks} for:item="wk">
+        <!-- 7 day cells -->
+        <template for:each={wk.days} for:item="cell">
+          <div key={cell.key} class={cell.classList} title={cell.title}>
+            <div class="tc__daynum">{cell.dayNum}</div>
+            <template if:true={cell.data}>
+              <div class="tc__amount">{cell.data.amountFormatted}</div>
+              <div class="tc__meta">
+                {cell.data.trades} trades
+                <template if:true={cell.data.winRate}>
+                  &nbsp;•&nbsp;{cell.data.winRate}%
+                </template>
+              </div>
+            </template>
+          </div>
+        </template>
+
+        <!-- Weekly total cell -->
+        <div key={wk.row} class="tc__cell tc__cell--week" title={wk.totalTitle}>
+          <div class="tc__weektotal">{wk.totalFormatted}</div>
+        </div>
+      </template>
+    </div>
+  </div>
+</template>

@@ -1,0 +1,88 @@
+.tc { font: 14px/1.4 var(--lwc-fontFamily, ui-sans-serif); }
+.tc__title { font-size: 1.1rem; font-weight: 600; }
+
+.tc__weekdays {
+  display:grid; grid-template-columns: repeat(7, 1fr);
+  gap:.25rem; margin-bottom:.25rem; color: var(--lwc-colorTextLabel);
+}
+.tc__weekdays > span { text-align:center; font-weight:600; font-size:.75rem; }
+
+.tc__grid { display:grid; grid-template-columns: repeat(7, 1fr); gap:.25rem; }
+
+.tc__cell {
+  position:relative; min-height: 92px; background: var(--lwc-colorBackgroundAlt);
+  border-radius: .5rem; padding:.5rem; box-shadow: 0 0 0 1px rgba(0,0,0,.04) inset;
+}
+.tc__cell--muted { opacity:.45; }
+.tc__daynum { position:absolute; top:.4rem; right:.5rem; font-size:.75rem; color: var(--lwc-colorTextLabel); }
+
+.tc__amount { margin-top: 1.25rem; font-weight:700; font-size:.95rem; }
+.tc__meta { font-size:.7rem; margin-top:.15rem; color: var(--lwc-colorTextLabel); }
+
+.tc__cell--pos { background: #e9f8ef; }
+.tc__cell--neg { background: #fdecef; }
+
+.tc__header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:.5rem;
+}
+.tc__controls {
+  display:flex;
+  align-items:center;
+  gap:.5rem;
+}
+.ctrl-select { width: 9rem; }
+.year-input { width: 6rem; }
+
+/* ===== additions for the weekly total column ===== */
+
+/* weekday header gets 8 columns when you add the 'tc__weekdays--8' modifier */
+.tc__weekdays.tc__weekdays--8 {
+  grid-template-columns: repeat(8, 1fr);
+}
+.tc__weekhdr {
+  text-align: right;
+  font-weight: 700;
+  font-size: .75rem;
+}
+
+/* grid becomes 8 columns when you add the 'tc__grid--8' modifier */
+.tc__grid.tc__grid--8 {
+  grid-template-columns: repeat(8, 1fr);
+}
+
+/* the new weekly-total cell on the far right */
+.tc__cell--week {
+  /* visually consistent with your existing cells */
+  position: relative;
+  min-height: 92px;
+  border-radius: .5rem;
+  padding: .5rem;
+  box-shadow: 0 0 0 1px rgba(171, 124, 58, 0.257) inset;
+
+  /* faint orange background */
+  background: rgba(255, 191, 101, 0.235);
+
+  /* layout */
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.tc__weektotal {
+  font-weight: 700;
+  font-size: .95rem;
+}
+
+/* ===== Monthly total next to month title ===== */
+.tc__monthtotal {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-left: 0.5rem;
+  color: #b45309; /* warm brown-orange tone */
+  background: rgba(255, 159, 28, 0.12);
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.4rem;
+}

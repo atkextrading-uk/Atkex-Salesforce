@@ -1,0 +1,5 @@
+.wrap { padding: .5rem; }
+.table-wrap { padding: .25rem; }
+.cell-pos { color: #0b7a36; font-weight: 600; }
+.cell-neg { color: #b1062b; font-weight: 600; }
+.cell-flat { color: var(--slds-g-color-neutral-foreground, #444); }
