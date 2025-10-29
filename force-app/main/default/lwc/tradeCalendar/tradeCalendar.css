@@ -55,20 +55,14 @@
 
 /* the new weekly-total cell on the far right */
 .tc__cell--week {
-  /* visually consistent with your existing cells */
-  position: relative;
-  min-height: 92px;
-  border-radius: .5rem;
-  padding: .5rem;
+  /* override just what’s different */
+  background: rgba(255, 180, 75, 0.146); /* your orange tint */
   box-shadow: 0 0 0 1px rgba(171, 124, 58, 0.257) inset;
 
-  /* faint orange background */
-  background: rgba(255, 191, 101, 0.235);
-
-  /* layout */
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
 }
 
 .tc__weektotal {

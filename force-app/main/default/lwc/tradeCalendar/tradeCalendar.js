@@ -23,6 +23,9 @@ export default class TradeCalendar extends LightningElement {
   statsByKey = {};
   wiredResult; // holds last wire to refresh explicitly
 
+  showPnl;
+  
+
   @wire(CurrentPageReference)
   handlePageRef(pageRef) {
     if (!pageRef) return;
@@ -78,8 +81,9 @@ export default class TradeCalendar extends LightningElement {
         const trades = d.trades || 0;
         const wins = d.wins || 0;
         const total = Number(d.totalPnl || 0);
+        const percentage = Number(d.pnlPercentage || 0);
         const winRate = trades ? (wins / trades) * 100 : 0;
-        map[d.isoDate] = { amount: Math.round(total), trades, winRate: Math.round(winRate * 10) / 10 };
+        map[d.isoDate] = { amount: Math.round(total), trades, winRate: Math.round(winRate * 10) / 10, percentage: percentage };
       });
       this.statsByKey = map;
     } else if (error) {
@@ -143,58 +147,129 @@ export default class TradeCalendar extends LightningElement {
 
     const allCells = [];
     for (let i = 0; i < totalCells; i++) {
-      let inMonth = false, dayNum, dateStr;
-      if (i < prevMonthDays) {
-        dayNum = prevLastDate - prevMonthDays + 1 + i;
-        const prev = new Date(y, m, 0);
-        dateStr = keyOf(prev.getFullYear(), prev.getMonth(), dayNum);
-      } else if (i < prevMonthDays + daysInMonth) {
-        inMonth = true; dayNum = i - prevMonthDays + 1;
-        dateStr = keyOf(y, m, dayNum);
-      } else {
-        const d = i - (prevMonthDays + daysInMonth) + 1;
-        const next = new Date(y, m + 1, 1);
-        dayNum = d; dateStr = keyOf(next.getFullYear(), next.getMonth(), dayNum);
-      }
+        let inMonth = false,
+            dayNum,
+            dateStr;
 
-      const raw = this.statsByKey[dateStr];
-      const data = raw ? {
-        amount: raw.amount,
-        trades: raw.trades,
-        winRate: Math.round((raw.winRate + Number.EPSILON) * 10) / 10,
-        amountFormatted: CURRENCY_FMT.format(raw.amount)
-      } : null;
+        if (i < prevMonthDays) {
+            // previous month
+            dayNum = prevLastDate - prevMonthDays + 1 + i;
+            const prev = new Date(y, m, 0);
+            dateStr = keyOf(prev.getFullYear(), prev.getMonth(), dayNum);
+        } else if (i < prevMonthDays + daysInMonth) {
+            // current month
+            inMonth = true;
+            dayNum = i - prevMonthDays + 1;
+            dateStr = keyOf(y, m, dayNum);
+        } else {
+            // next month
+            const d = i - (prevMonthDays + daysInMonth) + 1;
+            const next = new Date(y, m + 1, 1);
+            dayNum = d;
+            dateStr = keyOf(next.getFullYear(), next.getMonth(), dayNum);
+        }
 
-      const classList = ['tc__cell',
-        inMonth ? '' : 'tc__cell--muted',
-        data && data.amount > 0 ? 'tc__cell--pos' : '',
-        data && data.amount < 0 ? 'tc__cell--neg' : '']
-        .filter(Boolean).join(' ');
+        const raw = this.statsByKey[dateStr];
 
-      allCells.push({
-        key: dateStr, inMonth, classList, dayNum, data,
-        title: data ? `${dateStr}: ${data.amountFormatted} • ${data.trades} trades • ${data.winRate}%` : dateStr
-      });
+        const data = raw
+            ? {
+                  amount: raw.amount,
+                  percentage: raw.percentage,
+                  percentFormatted: `${raw.percentage}%`,
+                  trades: raw.trades,
+                  winRate: Math.round((raw.winRate + Number.EPSILON) * 10) / 10, // 1dp
+                  amountFormatted: CURRENCY_FMT.format(raw.amount)
+              }
+            : null;
+
+        const classList = [
+            'tc__cell',
+            inMonth ? '' : 'tc__cell--muted',
+            data && data.amount > 0 ? 'tc__cell--pos' : '',
+            data && data.amount < 0 ? 'tc__cell--neg' : ''
+        ]
+            .filter(Boolean)
+            .join(' ');
+
+        allCells.push({
+            key: dateStr,
+            inMonth,
+            classList,
+            dayNum,
+            data,
+            title: data
+                ? `${dateStr}: ${data.amountFormatted} • ${data.trades} trades • ${data.winRate}%`
+                : dateStr
+        });
     }
 
     // chunk into 6 weeks
     const weeks = [];
     for (let r = 0; r < 6; r++) {
-      const days = allCells.slice(r * 7, r * 7 + 7);
-      const total = days.reduce((sum, c) => {
-        if (c.inMonth && c.data) return sum + c.data.amount;
-        return sum;
-      }, 0);
-      weeks.push({
-        row: r,
-        days,
-        total,
-        totalFormatted: CURRENCY_FMT.format(total),
-        totalTitle: `Week ${r + 1} total: ${CURRENCY_FMT.format(total)}`,
-      });
+        const days = allCells.slice(r * 7, r * 7 + 7);
+
+        // aggregate weekly metrics
+        let totalAmount = 0;
+        let totalTrades = 0;
+        let totalWins = 0;
+        let totalLosses = 0;
+        let totalPercentage = 0; // sum of percentage field
+
+        for (const c of days) {
+            if (c.inMonth && c.data) {
+                // money
+                totalAmount += c.data.amount;
+
+                // trades
+                const tradesToday = c.data.trades ?? 0;
+                totalTrades += tradesToday;
+
+                // derive wins/losses for the day from winRate
+                const winsToday = Math.round(
+                    tradesToday * (c.data.winRate / 100)
+                );
+                const lossesToday = tradesToday - winsToday;
+                totalWins += winsToday;
+                totalLosses += lossesToday;
+
+                // percentage
+                totalPercentage += c.data.percentage ?? 0;
+            }
+        }
+
+        // compute weekly win rate
+        const weeklyWinRate =
+            totalTrades > 0
+                ? Math.round(
+                      ((totalWins / totalTrades) * 100 + Number.EPSILON) * 10
+                  ) / 10
+                : 0;
+
+        // formatters
+        const totalFormatted = CURRENCY_FMT.format(totalAmount);
+        const percentFormatted = `${Math.round(
+            (totalPercentage + Number.EPSILON) * 100
+        ) / 100}%`; // 2dp on the sum %
+
+        const data = `${totalTrades} trades (${totalWins}W / ${totalLosses}L, ${weeklyWinRate}%)`;
+
+        weeks.push({
+            row: r,
+            days,
+            total: totalAmount,
+            totalTrades,
+            totalWins,
+            totalLosses,
+            weeklyWinRate,
+            totalPercentage,
+            totalFormatted,
+            percentFormatted,
+            data
+        });
     }
+
     return weeks;
-  }
+}
 
   // ---- Get month total ----
   get monthTotal() {
@@ -219,5 +294,9 @@ export default class TradeCalendar extends LightningElement {
       currency: 'USD',
       maximumFractionDigits: 1
     }).format(this.monthTotal);
+  }
+
+  handleTogglePnl() {
+    this.showPnl = !this.showPnl;
   }
 }

@@ -7,6 +7,22 @@
       </div>
 
       <div class="tc__controls">
+
+        <!-- <lightning-button
+          label="PNL"
+          onclick={pnnSwitch}
+          variant="base"
+        ></lightning-button> -->
+
+        <lightning-input
+            type="toggle"
+            label="% / $"
+            message-toggle-active="Amount"
+            message-toggle-inactive="Percent"
+            checked={showPnl}
+            onchange={handleTogglePnl}>
+        </lightning-input>
+
         <lightning-button-icon
           icon-name="utility:chevronleft"
           onclick={prevMonth}
@@ -63,7 +79,15 @@
           <div key={cell.key} class={cell.classList} title={cell.title}>
             <div class="tc__daynum">{cell.dayNum}</div>
             <template if:true={cell.data}>
-              <div class="tc__amount">{cell.data.amountFormatted}</div>
+              
+              <div class="tc__amount">
+                <template lwc:if={showPnl}>
+                  {cell.data.amountFormatted}
+                </template>  
+                <template lwc:else>
+                  {cell.data.percentFormatted}
+                </template>
+              </div>
               <div class="tc__meta">
                 {cell.data.trades} trades
                 <template if:true={cell.data.winRate}>
@@ -76,7 +100,18 @@
 
         <!-- Weekly total cell -->
         <div key={wk.row} class="tc__cell tc__cell--week" title={wk.totalTitle}>
-          <div class="tc__weektotal">{wk.totalFormatted}</div>
+          <div class="tc__weektotal">
+            
+            <template lwc:if={showPnl}>
+              {wk.totalFormatted}
+            </template>  
+            <template lwc:else>
+              {wk.percentFormatted}
+            </template>
+          </div>
+          <div class="tc__meta">
+            {wk.data}
+          </div>
         </div>
       </template>
     </div>

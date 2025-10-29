@@ -27,7 +27,7 @@ public with sharing class ImportMetatraderTradesByAccount {
 
         // Single SOQL (no loops)
         Trading_Account__c ta = [
-            SELECT Id, Account__c, Account_Code__c, MetaTrader_ID__c, Latest_Update_Date__c, Balance__c
+            SELECT Id, Account__c, Account_Code__c, MetaTrader_ID__c, Latest_Update_Date__c, Balance__c, Max_R__c
               FROM Trading_Account__c
              WHERE Id = :taId
              LIMIT 1
@@ -68,6 +68,7 @@ public with sharing class ImportMetatraderTradesByAccount {
         qs = appendParam(qs, 'from', fromIso);
         qs = appendParam(qs, 'to', toIso);
         qs = appendParam(qs, 'openBalance', String.valueOf(ta.Balance__c));
+        qs = appendParam(qs, 'rValue', String.valueOf(ta.Max_R__c));
 
         String endpoint = base + qs;
         res.effectiveEndpoint = endpoint != null ? endpoint.replace('callout:', '') : null;

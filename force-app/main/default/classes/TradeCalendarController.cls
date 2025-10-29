@@ -2,6 +2,7 @@ public with sharing class TradeCalendarController {
     public class DayStat {
         @AuraEnabled public String isoDate;   // YYYY-MM-DD
         @AuraEnabled public Decimal totalPnl; // sum for the day
+        @AuraEnabled public Decimal pnlPercentage;
         @AuraEnabled public Integer trades;   // count
         @AuraEnabled public Integer wins;     // count of positive pnl
     }
@@ -17,7 +18,7 @@ public with sharing class TradeCalendarController {
         List<SR_Hedge__c> hedges;
         if (recordIdString.startsWith('001')) {
              hedges = [
-                SELECT Id, Final_Profit__c, Final_Close_Date__c, Close_Date_Time__c
+                SELECT Id, Final_Profit__c, Final_Close_Date__c, Close_Date_Time__c, Profit_Percentage__c
                 FROM SR_Hedge__c
                 WHERE Final_Close_Date__c >= :start
                 AND Final_Close_Date__c <  :endDate AND Actual_Trading_Account__r.Account__c = :recordId
@@ -38,7 +39,7 @@ public with sharing class TradeCalendarController {
             }
         } else if (recordIdString.startsWith('a0G')) {
             hedges = [
-                SELECT Id, Final_Profit__c, Final_Close_Date__c, Close_Date_Time__c
+                SELECT Id, Final_Profit__c, Final_Close_Date__c, Close_Date_Time__c, Profit_Percentage__c
                 FROM SR_Hedge__c
                 WHERE Final_Close_Date__c >= :start
                 AND Final_Close_Date__c <  :endDate AND Actual_Trading_Account__c = :recordId
@@ -62,7 +63,7 @@ public with sharing class TradeCalendarController {
             Id accountRecordId = [SELECT Contact.AccountId FROM User WHERE Id = :recordId LIMIT 1].Contact.AccountId;
 
             hedges = [
-                SELECT Id, Final_Profit__c, Final_Close_Date__c, Close_Date_Time__c
+                SELECT Id, Final_Profit__c, Final_Close_Date__c, Close_Date_Time__c, Profit_Percentage__c
                 FROM SR_Hedge__c
                 WHERE Final_Close_Date__c >= :start
                 AND Final_Close_Date__c <  :endDate AND  Actual_Trading_Account__r.Account__c = :accountRecordId
@@ -115,13 +116,16 @@ public with sharing class TradeCalendarController {
                             String.valueOf(d.month()).leftPad(2, '0') + '-' +
                             String.valueOf(d.day()).leftPad(2, '0');
                 s.totalPnl = 0;
+                s.pnlPercentage = 0;
                 s.trades = 0;
                 s.wins = 0;
                 byDay.put(d, s);
             }
 
             Decimal pnl = (h.Final_Profit__c == null) ? (h.X1st_Trade_Profit__c == null) ? 0 : h.X1st_Trade_Profit__c : h.Final_Profit__c;
+            Decimal pnlPercentage = (h.Profit_Percentage__c == null) ? (h.Profit_Percentage__c == null) ? 0 : h.Profit_Percentage__c : h.Profit_Percentage__c;
             s.totalPnl += pnl;
+            s.pnlPercentage += pnlPercentage;
             s.trades += 1;
             if (pnl > 0) s.wins += 1;
         }
